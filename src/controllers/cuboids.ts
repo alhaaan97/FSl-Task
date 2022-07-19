@@ -76,3 +76,17 @@ export const update = async (req: Request, res: Response): Promise<Response> => 
     return res.sendStatus(500)
   }
 }
+
+export const remove = async(
+  req: Request,
+  res: Response,
+): Promise<Response> =>{
+  try{
+    const id:Id = req.params.id;
+    await Cuboid.query().deleteById(id)
+
+    return res.sendStatus(HttpStatus.OK)
+  } catch(error){
+    return res.sendStatus(500)
+  }
+}
