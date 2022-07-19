@@ -224,7 +224,7 @@ describe('cuboid delete', () => {
   let bag: Bag
   let cuboid: Cuboid
 
-  beforeEach(async()=>{
+  beforeAll(async()=>{
     bag = await Bag.query().insert(
       factories.bag.build({
         volume:250,
@@ -246,8 +246,8 @@ describe('cuboid delete', () => {
     expect(response.status).toBe(HttpStatus.OK);
   });
 
-  it('should not delete and return 404 status code when cuboids doesnt exists', () => {
-    const response = { status: HttpStatus.NOT_FOUND };
+  it('should not delete and return 404 status code when cuboids doesnt exists', async() => {
+    const response = await request(server).delete(`/cuboids/${cuboid.id}`)
 
     expect(response.status).toBe(HttpStatus.NOT_FOUND);
   });
