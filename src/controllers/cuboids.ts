@@ -28,6 +28,7 @@ export const create = async (
   try {
     const { width, height, depth, bagId } = req.body;
     const bag = await Bag.query().findById(bagId).withGraphFetched('cuboids')
+    if(!bag) return res.sendStatus(HttpStatus.NOT_FOUND)
     const volumeOfCuboidsOnBag = bag?.cuboids?.reduce((accumulator, cuboid)=> accumulator += cuboid.width * cuboid.height * cuboid.depth, 0)
     const volumeCurrentCuboid = width * height * depth
     const totalVolume = volumeOfCuboidsOnBag && volumeOfCuboidsOnBag + volumeCurrentCuboid
